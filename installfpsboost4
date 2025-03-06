@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Check if the terminal is interactive
+if [ -t 0 ]; then
+    # Interactive mode: Prompt the user for confirmation
+    echo "Do you want to implement these performance boosts? It will unlock FPS and boost FPS but might crash Roblox and make the graphics blurry."
+    read -p "Type 'yes' to continue or anything else to cancel: " CONFIRM
+else
+    # Non-interactive mode: Warn the user and proceed automatically
+    echo "Warning: Running in non-interactive mode. Changes will be applied without confirmation."
+    CONFIRM="yes"
+fi
+
+# Check if the user confirmed
+if [ "$CONFIRM" != "yes" ]; then
+    echo "Operation canceled. No changes were made."
+    exit 1
+fi
+
+# Define the directory and file path
+DIR="/Applications/Roblox/Contents/MacOS/ClientSettings"
+FILE="$DIR/ClientAppSettings.json"
+
+# Create the directory if it doesn't exist
+echo "Creating directory: $DIR"
+mkdir -p "$DIR"
+
+# Check if the directory was created successfully
+if [ ! -d "$DIR" ]; then
+    echo "Failed to create directory: $DIR"
+    exit 1
+fi
+
+# Write the JSON content to the file
+echo "Writing configuration to: $FILE"
+cat <<EOF > "$FILE"
+{
+ "DFFlagDebugPauseVoxelizer": "True",
+ "DFFlagDebugPerfMode": "True",
+ "DFFlagDebugRenderForceTechnologyVoxel": "True",
+ "DFIntCullFactorPixelThresholdShadowMapHighQuality": "2147483647",
+ "DFIntCullFactorPixelThresholdShadowMapLowQuality": "2147483647",
+ "DFIntMaxFrameBufferSize": "3",
+ "DFIntPerformanceControlTextureQualityBestUtility": "-1",
+ "DFIntTaskSchedulerTargetFps": "666",
+ "FFlagDebugDisplayFPS": "True",
+ "FFlagDebugGraphicsDisableMetal": "True",
+ "FFlagDebugGraphicsPreferVulkan": "True",
+ "FFlagDebugSkyGray": "True",
+ "FIntDebugTextureManagerSkipMips": "3",
+ "FIntRenderShadowIntensity": "0",
+ "FIntTerrainArraySliceSize": "0",
+ "FLogNetwork": "7"
+}
+EOF
+
+# Check if the file was created successfully
+if [ -f "$FILE" ]; then
+    echo "ClientAppSettings.json has been successfully created at $FILE"
+else
+    echo "Failed to create ClientAppSettings.json"
+    exit 1
+fi

